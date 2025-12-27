@@ -1,22 +1,21 @@
-def mohasebe_moadel(nomarat):
-    return sum(nomarat) / len(nomarat)
-
-tedad_dars = int(input("tedad_dars_ha: "))
+def calculate_average(grades_list):
+    return sum(grades_list) / len(grades_list)
 
 
-nomarat = []
-for i in range(tedad_dars):
-    nomre = float(input(f" nomrh_dars {i + 1} vardkon: "))
-    nomarat.append(nomre)
+number_of_courses = int(input("تعداد درس‌ها: "))
 
-moadel = mohasebe_moadel(nomarat)
+grades = []
+for i in range(number_of_courses):
+    grade = float(input(f"نمره درس {i + 1}: "))
+    grades.append(grade)
 
+average_grade = calculate_average(grades)
 
-print(f" moadel : {moadel:.2f}")
+print(f"میانگین: {average_grade:.2f}")
 
-if moadel >= 17:
-    print("good:")
-elif moadel >= 10:
-    print("ok:")
+if average_grade >= 17:
+    print("خوب")
+elif average_grade >= 10:
+    print("قابل قبول")
 else:
-    print("oh no:")
+    print("ضعیف")
