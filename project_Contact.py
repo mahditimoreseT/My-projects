@@ -18,21 +18,17 @@ class PhoneBook:
         self.contact_list.append(new_contact)
 
     def save_to_csv(self, file_name):
-        file = open(file_name, "w", encoding="utf-8")
-
-        for contact in self.contact_list:
-            file.write(
-                contact.contact_name + "," +
-                contact.contact_phone_number + "\n"
-            )
-
-        file.close()
+        with open(file_name, "w", encoding="utf-8") as file:
+            for contact in self.contact_list:
+                file.write(
+                    contact.contact_name + "," +
+                    contact.contact_phone_number + "\n"
+                )
 
     def load_from_csv(self, file_name):
         try:
-            file = open(file_name, "r", encoding="utf-8")
-            lines = file.readlines()
-            file.close()
+            with open(file_name, "r", encoding="utf-8") as file:
+                lines = file.readlines()
 
             for line in lines:
                 line = line.strip()
