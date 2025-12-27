@@ -1,12 +1,12 @@
 # تعریف کلاس دانشجو
 class Student:
-    def __init__(self, student_id, name, grades):
+    def __init__(self, student_id, student_name, grades_list):
         self.student_id = student_id
-        self.name = name
-        self.grades = grades
+        self.student_name = student_name
+        self.grades_list = grades_list
 
     def calculate_gpa(self):
-        return sum(self.grades) / len(self.grades)
+        return sum(self.grades_list) / len(self.grades_list)
 
 
 # ایجاد چند شیء از کلاس Student
@@ -19,5 +19,5 @@ students_list = [
 
 # نمایش معدل هر دانشجو
 for student in students_list:
-    avg = student.calculate_gpa()
-    print(f"Name: {student.name} | GPA: {avg:.2f}")
+    average_gpa = student.calculate_gpa()
+    print(f"Name: {student.student_name} | GPA: {average_gpa:.2f}")
