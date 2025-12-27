@@ -1,79 +1,105 @@
 # //////////////////////////////////////////////
 class Contact:
-    def __init__(self, name, phone_number):
-        if not phone_number.isdigit():
-            raise ValueError("inpiut number ok")
-        self.name = name
-        self.phone_number = phone_number
-#//////////////////////////////////////////
+    def __init__(self, contact_name, contact_phone_number):
+        if not contact_phone_number.isdigit():
+            raise ValueError("input number ok")
+
+        self.contact_name = contact_name
+        self.contact_phone_number = contact_phone_number
+
+
+# //////////////////////////////////////////
 class PhoneBook:
     def __init__(self):
-        self.contacts = []
+        self.contact_list = []
 
-    def add_contact(self, name, phone):
-        contact = Contact(name, phone)
-        self.contacts.append(contact)
+    def add_contact(self, contact_name, contact_phone_number):
+        new_contact = Contact(contact_name, contact_phone_number)
+        self.contact_list.append(new_contact)
 
-    def save_to_csv(self, filename):
-        file = open(filename, "w", encoding="utf-8")
-        for c in self.contacts:
-            file.write(c.name + "," + c.phone_number + "\n")
+    def save_to_csv(self, file_name):
+        file = open(file_name, "w", encoding="utf-8")
+
+        for contact in self.contact_list:
+            file.write(
+                contact.contact_name + "," +
+                contact.contact_phone_number + "\n"
+            )
+
         file.close()
 
-    def load_from_csv(self, filename):
+    def load_from_csv(self, file_name):
         try:
-            file = open(filename, "r", encoding="utf-8")
+            file = open(file_name, "r", encoding="utf-8")
             lines = file.readlines()
             file.close()
 
             for line in lines:
                 line = line.strip()
-                parts = line.split(",")
+                line_parts = line.split(",")
 
                 try:
-                    name = parts[0]
-                    phone = parts[1]
-                    contact = Contact(name, phone)
-                    self.contacts.append(contact)
+                    contact_name = line_parts[0]
+                    contact_phone_number = line_parts[1]
+
+                    new_contact = Contact(
+                        contact_name,
+                        contact_phone_number
+                    )
+                    self.contact_list.append(new_contact)
+
                 except ValueError:
                     pass
 
         except FileNotFoundError:
-            print("created ok")
-#///////////////////////////////////////////////////////////
-phonebook = PhoneBook()
-phonebook.load_from_csv("contacts.csv")
-#//////////////////////////////////////////////////////////////
+            print("file created ok")
+
+
+# ///////////////////////////////////////////////////////////
+phone_book = PhoneBook()
+phone_book.load_from_csv("contacts.csv")
+
+
+# ///////////////////////////////////////////////////////////
 while True:
-    print("1-add")
-    print("2-print")
-    print("3-S&E")
+    print("1 - add contact")
+    print("2 - print contacts")
+    print("3 - save & exit")
+
     try:
-        choice = int(input("?: "))
+        user_choice = int(input("?: "))
     except ValueError:
-        print(" entre number")
+        print("enter number")
         continue
-    if choice == 1:
-        name = input("name: ")
-        phone = input("number p : ")
+
+    if user_choice == 1:
+        input_name = input("name: ")
+        input_phone_number = input("phone number: ")
+
         try:
-            phonebook.add_contact(name, phone)
+            phone_book.add_contact(
+                input_name,
+                input_phone_number
+            )
             print("add ok")
         except ValueError:
-            print("oh no plese agan")
+            print("oh no please again")
 
-    elif choice == 2:
-        if len(phonebook.contacts) == 0:
-            print("not user")
+    elif user_choice == 2:
+        if len(phone_book.contact_list) == 0:
+            print("no users")
         else:
-            for c in phonebook.contacts:
-                print(c.name, "-", c.phone_number)
+            for contact in phone_book.contact_list:
+                print(
+                    contact.contact_name,
+                    "-",
+                    contact.contact_phone_number
+                )
 
-    elif choice == 3:
-        phonebook.save_to_csv("contacts.csv")
-        print("Save ok & bay")
+    elif user_choice == 3:
+        phone_book.save_to_csv("contacts.csv")
+        print("save ok & bye")
         break
 
     else:
-        print(" number namotabar ast hoshshshshsa")
-#payan poroject ba 79 khat;
+        print("number not valid")
