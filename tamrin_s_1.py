@@ -1,19 +1,17 @@
-print("mohasbh_sn ")
-print("1) sadh")
-print("2) hrfayy")
-mode = input(" (1 ya 2): ")
+print("محاسبه سن")
+print("1) ساده")
+print("2) حرفه‌ای")
+
+mode = input("انتخاب حالت (1 یا 2): ")
 
 if mode == "1":
-    year = input(" salravardkon: ")
-    year = int(year)
-    age = 1404 - year
-    print("sn_tagribi :", age, "sal")
-       
+    birth_year = int(input("سال تولد: "))
+    age = 1404 - birth_year
+    print("سن تقریبی:", age, "سال")
+
 elif mode == "2":
-    name = input(" namt?: ")
-    birth = input("sal__tavalodt: ")
-    current = input("sal_jary_ravardkon: ")
-    birth = int(birth)
-    current = int(current)
-    age = current - birth
-    print("nam:",name,"sn", age)
+    name = input("نام: ")
+    birth_year = int(input("سال تولد: "))
+    current_year = int(input("سال جاری: "))
+    age = current_year - birth_year
+    print("نام:", name, "| سن:", age)
