@@ -1,35 +1,37 @@
 import tkinter as tk
-#////////////////////////////////////////////
-def dong():
-    try:
-        a = float(e1.get())
-        b = int(e2.get())
 
-        if b == 0:
-            l.config(text="خطا: تعداد صفر است")
+def calculate_share():
+    try:
+        total_amount = float(entry_total_amount.get())
+        num_people = int(entry_num_people.get())
+
+        if num_people == 0:
+            label_result.config(text="خطا: تعداد نفرات صفر است")
             return
 
-        c = a / b
-        l.config(text=f"سهم هر نفر: {c:.0f} تومان")
+        share = total_amount / num_people
+        label_result.config(text=f"سهم هر نفر: {share:.0f} تومان")
 
     except ValueError:
-        l.config(text="خطا: عدد وارد کنید")
-#///////////////////////////////////////////////////
+        label_result.config(text="خطا: عدد وارد کنید")
+
+
 root = tk.Tk()
-root.title("Dong Calc")
-#/////////////////////////////////////////////////
+root.title("محاسبه سهم")
+
 tk.Label(root, text="مبلغ کل:").pack()
-e1 = tk.Entry(root)
-e1.pack()
-#/////////////////////////////////////////////////
+entry_total_amount = tk.Entry(root)
+entry_total_amount.pack()
+
+
 tk.Label(root, text="تعداد نفرات:").pack()
-e2 = tk.Entry(root)
-e2.pack()
-#/////////////////////////////////////////////////////
-tk.Button(root, text="محاسبه سهم", command=dong).pack()
-#/////////////////////////////////////////////////////////
-l = tk.Label(root, text="")
-l.pack()
-#////////////////////////////////////////////////////////
+entry_num_people = tk.Entry(root)
+entry_num_people.pack()
+
+tk.Button(root, text="محاسبه سهم", command=calculate_share).pack()
+
+
+label_result = tk.Label(root, text="")
+label_result.pack()
+
 root.mainloop()
-#////////////////////////////////////////////////////////
