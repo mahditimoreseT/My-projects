@@ -1,76 +1,82 @@
 class FoodItem:
-    def __init__(self,name,base_price):
+    def __init__(self, name, base_price):
+        self.name = name
+        self.base_price = base_price
 
-        self.name=name
-        self.base_price=base_price
-
-        if base_price>0:
-            self._base_price=base_price
+        if base_price > 0:
+            self._validated_base_price = base_price
         else:
-            self._base_price=0
-
+            self._validated_base_price = 0
 
     def calculate_cost(self):
-        return self._base_price
-    
+        return self._validated_base_price
+
     def __str__(self):
         return self.name
-#/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Pizza(FoodItem):
-    def __init__(self, name, base_price,size):
+    def __init__(self, name, base_price, size):
         super().__init__(name, base_price)
 
-        self.size=size.lower()
-        self.extra_toppings={}
+        self.size = size.lower()
+        self.extra_toppings = {}
 
-    def extra_topping(self,key_nam,value_gmat):
-        self.extra_toppings[key_nam]=value_gmat
+    def add_extra_topping(self, topping_name, topping_price):
+        self.extra_toppings[topping_name] = topping_price
 
     def calculate_cost(self):
-        gymat=self._base_price
+        final_price = self._validated_base_price
 
         if self.size == "medium":
-            gymat *= 1.2
+            final_price *= 1.2
         elif self.size == "large":
-            gymat *= 1.5
+            final_price *= 1.5
 
-        total=sum(self.extra_toppings.values())
+        toppings_total_price = sum(self.extra_toppings.values())
+        return final_price + toppings_total_price
 
-        return gymat+total 
-#//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Burger(FoodItem):
-    def __init__(self, name, base_price,is_double):
+    def __init__(self, name, base_price, is_double):
         super().__init__(name, base_price)
-        self.is_double=is_double
+        self.is_double = is_double
 
     def calculate_cost(self):
-        mablag=self._base_price
+        final_price = self._validated_base_price
+
         if self.is_double:
-            mablag+=(mablag*0.35)
-        return mablag
-#//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            final_price += final_price * 0.35
+
+        return final_price
+
+
+# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Order:
     def __init__(self):
-        self.listm=[]
-    def add_food(self,food):
-        self.listm.append(food)
+        self.ordered_items = []
+
+    def add_food(self, food_item):
+        self.ordered_items.append(food_item)
 
     def print_receipt(self):
-        self.totali=0
+        self.total_order_price = 0
 
-        for i in self.listm:
-            s=i.calculate_cost()
-            self.totali+=s
-            print(i.name,s)
-#//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        for item in self.ordered_items:
+            item_price = item.calculate_cost()
+            self.total_order_price += item_price
+            print(item.name, item_price)
 
 
-p = Pizza("Margarita", 200, "Large")
-p.extra_topping("Cheese", 30)
+# /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+pizza_item = Pizza("Margarita", 200, "Large")
+pizza_item.add_extra_topping("Cheese", 30)
 
-b = Burger("Double Burger", 150, True)
+burger_item = Burger("Double Burger", 150, True)
 
-o = Order()
-o.add_food(p)
-o.add_food(b)
-o.print_receipt()
+order = Order()
+order.add_food(pizza_item)
+order.add_food(burger_item)
+order.print_receipt()
